@@ -29,7 +29,7 @@ public class Film {
         this.tittel = tittel;
         this.lansering = lansering;
         this.filmselskap = filmselskap;
-        this.sjanger = Sjanger.finnSjanger(sjanger);
+        this.sjanger = Film.Sjanger.valueOf(sjanger);
     }
 
     public int getFilmnr() {
@@ -70,6 +70,14 @@ public class Film {
 
     public void setFilmselskap(String filmselskap) {
         this.filmselskap = filmselskap;
+    }
+
+    public Sjanger getSjanger() {
+        return sjanger;
+    }
+
+    public void setSjanger(Sjanger sjanger) {
+        this.sjanger = sjanger;
     }
 
     @Override

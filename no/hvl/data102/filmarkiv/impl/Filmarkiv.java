@@ -9,69 +9,86 @@ import java.util.List;
 
 public class Filmarkiv implements FilmarkivADT {
 
-    private Film[] arkiv;
+    private LinearNode<Film> arkiv;
     private int antall;
-    private Film.Sjanger[] sjangTab;
 
-    public Filmarkiv(int maksantall) {
-        sjangTab = Film.Sjanger.values();
-        arkiv = new Film[maksantall];
-        antall = 0;
+    public Filmarkiv() {
+        this.arkiv = null;
+        this.antall = 0;
     }
 
-    @Override
-    public Film finnFilm(int nr) {
-        for (int i = 0; i < antall; i++) {
-            if (nr == arkiv[i].getFilmnr()) {
-                return arkiv[i];
-            }
-        }
+    public Film[] getArkiv() {
+        //TODO
         return null;
     }
 
     @Override
-    public boolean leggTilFilm(Film nyFilm) {
-        if (antall == arkiv.length) {
-            arkiv = Arrays.copyOf(arkiv, arkiv.length*2);
+    public Film finnFilm(int nr) {
+        LinearNode<Film> p = arkiv;
+
+        while (p != null) {
+            if (p.data.getFilmnr() == nr) {
+                return p.data;
+            }
+            p = p.neste;
         }
-            arkiv[antall] = nyFilm;
-            antall++;
-            return true;
+        return null;
+    }
+
+    public boolean erTom() {
+        return arkiv == null;
+    }
+
+    @Override
+    public boolean leggTilFilm(Film nyFilm) {
+        LinearNode<Film> n = new LinearNode<>(nyFilm);
+        n.neste = arkiv;
+        arkiv = n;
+        antall++;
+        return true;
     }
 
     @Override
     public boolean slettFilm(int filmnr) {
-        for (int i = 0; i < arkiv.length; i++) {
-            if (filmnr == arkiv[i].getFilmnr()) {
-                arkiv[i] = arkiv[antall-1];
-                arkiv[antall-1] = null;
-                antall--;
+        if (erTom()) {
+            return false;
+        }
+        LinearNode<Film> currNode = arkiv, prevNode = null;
+        Film slett = finnFilm(filmnr);
+
+        if (currNode.data.equals(slett)) {
+            arkiv = currNode.neste;
+            return true;
+        }
+
+        while (currNode != null) {
+            if (currNode.data.equals(slett)) {
+                prevNode.neste = currNode.neste;
                 return true;
             }
+            prevNode = currNode;
+            currNode = currNode.neste;
         }
+
         return false;
     }
 
     @Override
     public Film[] soekTittel(String delstreng) {
         List<Film> treffListe = new ArrayList<>();
-        for (int i = 0; i < antall; i++) {
-            if (arkiv[i].getTittel().toLowerCase().contains(delstreng.toLowerCase())) {
-                treffListe.add(arkiv[i]);
-            }
-        }
+
         return treffListe.toArray(new Film[treffListe.size()]);
     }
 
     @Override
     public Film[] soekProdusent(String delstreng) {
-        Film[] soekProdusent = new Film[antall];
+        List<Film> treffListe = new ArrayList<>();
         for (int i = 0; i < antall; i++) {
-            if (arkiv[i].getProdusent().contains(delstreng)) {
-                soekProdusent[i] = arkiv[i];
+            if (arkiv[i].getProdusent().toLowerCase().contains(delstreng.toLowerCase())) {
+                treffListe.add(arkiv[i]);
             }
         }
-        return soekProdusent;
+        return treffListe.toArray(new Film[treffListe.size()]);
     }
 
     @Override

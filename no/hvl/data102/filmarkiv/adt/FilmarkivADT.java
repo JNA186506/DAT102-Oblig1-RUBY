@@ -49,5 +49,7 @@ public interface FilmarkivADT {
      * @return antall filmer i arkivet
      */
     int antall();
+
+    Film[] getArkiv();
 }
 
