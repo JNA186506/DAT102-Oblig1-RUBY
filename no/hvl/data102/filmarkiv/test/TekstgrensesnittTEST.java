@@ -14,7 +14,7 @@ public class TekstgrensesnittTEST {
     private Film a = new Film(100, "Clint Eastwood", "3:10 to Yuma", 1992, "Universal", "ACTION");
     private Film b = new Film(101, "Stanley Kubrick", "2001 a space odyssey", 2001, "Universal", "SCIFI");
     private Tekstgrensesnitt t = new Tekstgrensesnitt();
-    private Filmarkiv fA = new Filmarkiv(2);
+    private Filmarkiv fA = new Filmarkiv();
 
 
     @BeforeEach
@@ -39,7 +39,10 @@ public class TekstgrensesnittTEST {
         t.skrivUtFilmProdusent(fA, "kuB");
     }
 
-
+    @Test
+    void testSkrivUtStatistikk() {
+        t.skrivUtStatistikk(fA);
+    }
 
 
 

@@ -81,6 +81,7 @@ public class Tekstgrensesnitt {
                 sjangerTelling.put(sjanger, sjangerTelling.getOrDefault(sjanger, 0) + 1);
             }
         }
+        System.out.println(sjangerTelling);
     }
 // osv ... andre metoder
 }
