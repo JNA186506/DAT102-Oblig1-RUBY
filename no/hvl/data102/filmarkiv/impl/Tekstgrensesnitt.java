@@ -11,25 +11,19 @@ public class Tekstgrensesnitt {
 
 
     // Leser inn opplysninger om en film fra tastatur og returnere et Film-objekt
-    public Film lesFilm(){
+    public Film lesFilm() {
         Scanner s = new Scanner(System.in);
 
-        System.out.println("Skriv inn filmnummer");
         int filmNr = Integer.parseInt(s.nextLine());
 
-        System.out.println("Skriv inn produsent");
         String produsent = s.nextLine();
 
-        System.out.println("Skriv inn tittel");
         String tittel = s.nextLine();
 
-        System.out.println("Skriv inn lanseringsår");
         int lanseringsAar = Integer.parseInt(s.nextLine());
 
-        System.out.println("Skriv inn filmselskap");
         String filmselskap = s.nextLine();
 
-        System.out.println("Velg sjanger: ");
         String sjanger = s.nextLine();
 
         return new Film(filmNr, produsent, tittel, lanseringsAar, filmselskap, sjanger);
